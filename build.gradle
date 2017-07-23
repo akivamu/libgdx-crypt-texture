@@ -1,0 +1,23 @@
+group 'com.akivamu'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+ext {
+    gdxVersion = '1.9.6'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+    testCompileOnly "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+}
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
