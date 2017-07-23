@@ -1,6 +1,8 @@
 import com.akivamu.gdx.Main;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class TestMain {
     @Test
     public void testPrintHelp() {
