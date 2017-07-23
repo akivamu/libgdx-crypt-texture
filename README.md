@@ -2,13 +2,19 @@
 A simple library to encrypt and decrypt files (include libGdx Texture)
 
 # Usage
+Step 1. Use other tools to create texture file (e.g. [TexturePacker](https://github.com/crashinvaders/gdx-texture-packer-gui))  
+Step 2. Encrypt generated texture files by `libgdx-crypt-texture` executable jar.  
+Step 3. In libGdx project source code:
+  - If you use `Texture`, decrypting by `TextureDecryptor`
+  - If you want to load texture to skin, use `CryptSkin`
+
 ## Encryption
 The class `TextureEncryptor` should be used in dev PC only.  
 You can build this project into executable jar file, then run on command line to encrypt files.  
 Command line arguments:
-  - <key>       (required) key to encrypt (0-255)
-  - <input>     (required) input file/folder
-  - [output]    (optional) output folder
+  - key (required) : key to encrypt (0-255)
+  - input (required) : input file/folder
+  - output (optional) : output folder
 This executable currently uses `SimpleXorCrypto` algorithm.
 
 ## Decryption
