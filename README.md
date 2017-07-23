@@ -41,22 +41,20 @@ public interface Crypto {
 ```
 The library provides a sample algorithm implementation called `SimpleXorCrypto`.
 
-## Skin and TextureAtlas
-The class `CryptTextureAtlas` extends libGdx's class `TextureAtlas`. Texture atlas will be used when create `Skin`.  
-The class `CryptSkin` extends libGdx's class `Skin`, and utilizes `CryptTextureAtlas` to store decrypt texture. Skin
-will be used to get texture regions from texture atlas.  
+## TextureAtlas and Skin
+LibGdx `Skin` uses texture atlas to manage textures, texture regions, drawable...  
+The class `CryptTextureAtlas` extends libGdx's class `TextureAtlas`, adding crypto function  
+We use it when initialize `Skin`  
 ```
-// Your secret key to encrypt
+// An example crypto
 int secretKey = 123;
-
-// Use simple crypto implementation
 Crypto crypto = new SimpleXorCrypto((byte) secretKey);
 
-// Your skin file
-FileHandle yourSkinFile = Gdx.files.internal("yourGameFile.skin");
+// Decrypt texture file into texture atlas
+CryptTextureAtlas atlas = new CryptTextureAtlas(crypto, "yourAtlas.pack");
 
-// Decrypt texture file
-Skin skin = new CryptSkin(yourSkinFile, crypto);
+// Load into skin
+Skin skin = new Skin(yourSkinFile, atlas);
 ```
 
 # Build system

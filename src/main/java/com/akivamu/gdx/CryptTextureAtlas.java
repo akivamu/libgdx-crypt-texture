@@ -1,6 +1,7 @@
 package com.akivamu.gdx;
 
 import com.akivamu.gdx.crypto.Crypto;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -10,12 +11,29 @@ public class CryptTextureAtlas extends TextureAtlas {
     private final Crypto crypto;
 
     // Override constructor to load encrypt texture
-    public CryptTextureAtlas(FileHandle packFileHandler, Crypto crypto) {
+    public CryptTextureAtlas(Crypto crypto, String internalPackFile) {
+        this(crypto, Gdx.files.internal(internalPackFile));
+    }
+
+    public CryptTextureAtlas(Crypto crypto, FileHandle packFile) {
+        this(crypto, packFile, packFile.parent());
+    }
+
+    public CryptTextureAtlas(Crypto crypto, FileHandle packFile, boolean flip) {
+        this(crypto, packFile, packFile.parent(), flip);
+    }
+
+    public CryptTextureAtlas(Crypto crypto, FileHandle packFile, FileHandle imagesDir) {
+        this(crypto, packFile, imagesDir, false);
+    }
+
+    public CryptTextureAtlas(Crypto crypto, FileHandle packFile, FileHandle imagesDir, boolean flip) {
+        this(crypto, new TextureAtlasData(packFile, imagesDir, flip));
+    }
+
+    public CryptTextureAtlas(Crypto crypto, TextureAtlasData data) {
         this.crypto = crypto;
-        if (packFileHandler.exists()) {
-            TextureAtlasData data = new TextureAtlasData(packFileHandler, packFileHandler.parent(), false);
-            load(data);
-        }
+        if (data != null) load(data);
     }
 
     private void load(TextureAtlasData data) {
