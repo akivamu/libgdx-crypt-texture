@@ -41,19 +41,24 @@ public class Main {
             if (inputFiles == null || inputFiles.length == 0) shutdown("Input is empty");
 
             // Do encrypt
-            File outputDir = new File(outputDirName);
-            outputDir.mkdirs();
-            Crypto crypto = new SimpleXorCrypto(key);
-            for (File file : inputFiles) {
-                if (file.isDirectory()) continue;
-                String inputPath = file.getAbsolutePath();
-                String outputPath = outputDir.getAbsolutePath() + "/" + file.getName();
-                TextureEncryptor.encryptToFile(crypto, inputPath, outputPath);
-                System.out.println(inputPath + " -> " + outputPath);
-            }
+            simpleXorCrypto(key, inputFiles, outputDirName);
         }
     }
 
+    public static void simpleXorCrypto(byte key, File[] inputFiles, String outputDirName) {
+        Crypto crypto = new SimpleXorCrypto(key);
+
+        File outputDir = new File(outputDirName);
+        outputDir.mkdirs();
+
+        for (File file : inputFiles) {
+            if (file.isDirectory()) continue;
+            String inputPath = file.getAbsolutePath();
+            String outputPath = outputDir.getAbsolutePath() + "/" + file.getName();
+            TextureEncryptor.encryptToFile(crypto, inputPath, outputPath);
+            System.out.println(inputPath + " -> " + outputPath);
+        }
+    }
 
     private static void shutdown(String text) {
         System.out.println(text);
