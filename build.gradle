@@ -24,7 +24,7 @@ dependencies {
 
 shadowJar {
     manifest {
-        attributes 'Main-Class': 'com.akivamu.gdx.Main'
+        attributes 'Main-Class': 'com.akivamu.gdx.exe.SimpleXorCryptoEncryptor'
     }
 }
 

@@ -1,53 +1,49 @@
-package com.akivamu.gdx;
+package com.akivamu.gdx.exe;
 
+import com.akivamu.gdx.TextureEncryptor;
 import com.akivamu.gdx.crypto.Crypto;
-import com.akivamu.gdx.crypto.SimpleXorCrypto;
 
 import java.io.File;
 
-public class Main {
-    private static final String OUTPUT_DIR_NAME = "encrypted";
+public abstract class Main {
+    private static final String DEFAULT_OUTPUT_DIR_NAME = "encrypted";
 
-    public static void main(String[] args) {
-        if (args.length < 2) {
+    private final String outputDirName;
+    private final File[] inputFiles;
+    private final Crypto crypto;
+
+    protected Main(String[] args) throws IllegalArgumentException {
+        if (args.length != 2 && args.length != 3) {
             printHelp();
+            throw new IllegalArgumentException("Insufficient parameters");
         } else {
-
             // Output
-            String outputDirName = OUTPUT_DIR_NAME;
             if (args.length == 3) {
                 outputDirName = args[2];
-            }
-
-            // Key
-            byte key = 0;
-            try {
-                key = Byte.parseByte(args[0]);
-            } catch (NumberFormatException e) {
-                shutdown("Invalid key. Must be a number from 0-255");
+            } else {
+                outputDirName = DEFAULT_OUTPUT_DIR_NAME;
             }
 
             // Input
             File input = new File(args[1]);
-
-            if (!input.exists()) shutdown("Input not exists");
-
+            if (!input.exists()) throw new IllegalArgumentException("Input not exists");
             File[] inputFiles = new File[1];
             if (input.isDirectory()) {
                 inputFiles = input.listFiles();
             } else {
                 inputFiles[0] = input;
             }
-            if (inputFiles == null || inputFiles.length == 0) shutdown("Input is empty");
+            if (inputFiles == null || inputFiles.length == 0) throw new IllegalArgumentException("Input is empty");
+            this.inputFiles = inputFiles;
 
-            // Do encrypt
-            simpleXorCrypto(key, inputFiles, outputDirName);
+            // Build crypto
+            crypto = buildCrypto(args[0]);
         }
     }
 
-    public static void simpleXorCrypto(byte key, File[] inputFiles, String outputDirName) {
-        Crypto crypto = new SimpleXorCrypto(key);
+    protected abstract Crypto buildCrypto(String key) throws IllegalArgumentException;
 
+    protected final void doEncrypt() {
         File outputDir = new File(outputDirName);
         outputDir.mkdirs();
 
@@ -60,15 +56,14 @@ public class Main {
         }
     }
 
-    private static void shutdown(String text) {
+    protected static void onError(String text) {
         System.out.println(text);
         System.exit(1);
     }
 
-    private static void printHelp() {
-        System.out.println("Encrypt file by simple xor crypto.");
+    protected void printHelp() {
         System.out.println("Command line arguments:");
-        System.out.println("   <key>       (required) key to encrypt (0-255)");
+        System.out.println("   <key>       (required) key to encrypt");
         System.out.println("   <input>     (required) input file/folder");
         System.out.println("   [output]    (optional) output folder");
     }
