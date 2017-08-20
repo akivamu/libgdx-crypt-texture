@@ -6,7 +6,7 @@ Step 1. Use other tools to create texture file (e.g. [TexturePacker](https://git
 Step 2. Encrypt generated texture files by `libgdx-crypt-texture` executable jar.  
 Step 3. In libGdx project source code:
   - If you use `Texture`, decrypting by `TextureDecryptor`
-  - If you want to load texture to skin, use `CryptSkin`
+  - If you want to load texture to skin, use `CryptTextureAtlas` to create skin
 
 ## Encryption
 The class `TextureEncryptor` should be used in dev PC only.  
