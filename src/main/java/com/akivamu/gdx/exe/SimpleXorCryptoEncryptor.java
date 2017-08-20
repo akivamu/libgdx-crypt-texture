@@ -29,9 +29,12 @@ public class SimpleXorCryptoEncryptor extends Main {
     }
 
     // Make public static API for other usage
-    public static void process(String key, String inputPath, String outputDirName) {
+    public static void process(String key, String inputPath, String outputDirName, String... ignoreExtensions) {
         try {
             SimpleXorCryptoEncryptor instance = new SimpleXorCryptoEncryptor(new String[]{key, inputPath, outputDirName});
+            if (ignoreExtensions != null) {
+                for (String ext : ignoreExtensions) instance.ignoreExtensions.add(ext);
+            }
             // Encrypt
             instance.doEncrypt();
         } catch (IllegalArgumentException e) {

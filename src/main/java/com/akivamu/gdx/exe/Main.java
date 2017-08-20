@@ -4,10 +4,12 @@ import com.akivamu.gdx.TextureEncryptor;
 import com.akivamu.gdx.crypto.Crypto;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Main {
     private static final String DEFAULT_OUTPUT_DIR_NAME = "encrypted";
-    private static final String[] DEFAULT_IGNORED_EXTENSIONS = {};
+    protected final List<String> ignoreExtensions = new ArrayList<>();
 
     private final String outputDirName;
     private final File[] inputFiles;
@@ -58,7 +60,7 @@ public abstract class Main {
     }
 
     private boolean isIgnored(String fileName) {
-        for (String ignoreExt : DEFAULT_IGNORED_EXTENSIONS) {
+        for (String ignoreExt : ignoreExtensions) {
             if (fileName.endsWith("." + ignoreExt)) return true;
         }
         return false;
