@@ -24,4 +24,14 @@ public class SimpleXorCrypto implements Crypto {
     public byte[] decrypt(byte[] encryptedBytes, boolean inPlace) {
         return encrypt(encryptedBytes, inPlace);
     }
+
+    @Override
+    public byte encrypt(byte val) {
+        return (byte) (val ^ number);
+    }
+
+    @Override
+    public byte decrypt(byte val) {
+        return (byte) (val ^ number);
+    }
 }

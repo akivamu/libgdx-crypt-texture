@@ -7,7 +7,7 @@ import java.io.File;
 
 public abstract class Main {
     private static final String DEFAULT_OUTPUT_DIR_NAME = "encrypted";
-    private static final String[] DEFAULT_IGNORED_EXTENSIONS = {"atlas"};
+    private static final String[] DEFAULT_IGNORED_EXTENSIONS = {};
 
     private final String outputDirName;
     private final File[] inputFiles;

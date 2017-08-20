@@ -11,8 +11,8 @@ public class CryptTextureAtlas extends TextureAtlas {
     private final Crypto crypto;
 
     // Override constructor to load encrypt texture
-    public CryptTextureAtlas(Crypto crypto, String internalPackFile) {
-        this(crypto, Gdx.files.internal(internalPackFile));
+    public CryptTextureAtlas(Crypto crypto, String encryptedPackFilePath) {
+        this(crypto, new CryptFileHandle(crypto, encryptedPackFilePath));
     }
 
     public CryptTextureAtlas(Crypto crypto, FileHandle packFile) {
