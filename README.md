@@ -2,6 +2,11 @@
 A simple library to encrypt and decrypt files (include libGdx Texture)
 
 # Usage
+
+**Update 2018**  
+For convenience, use [this gradle plugin](https://github.com/akivamu/libgdx-asset-helper-gradle-plugin). Ignore below steps.
+
+
 Step 1. Use other tools to create texture file (e.g. [TexturePacker](https://github.com/crashinvaders/gdx-texture-packer-gui))  
 Step 2. Encrypt generated texture files by `libgdx-crypt-texture` executable jar.  
 Step 3. In libGdx project source code:
